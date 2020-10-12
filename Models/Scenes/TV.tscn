@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Models/TV.glb" type="PackedScene" id=1]
+[ext_resource path="res://Interactable/InteractableTVTurnOn.gd" type="Script" id=2]
+[ext_resource path="res://Models/Scenes/TV.gd" type="Script" id=3]
+[ext_resource path="res://Interactable/InteractableButton.gd" type="Script" id=4]
+[ext_resource path="res://Interactable/InteractableRotationButton.gd" type="Script" id=5]
+
+[sub_resource type="ConcavePolygonShape" id=1]
+data = PoolVector3Array( -0.0546, -0.0365, 0.0152, -0.0546, 0.0365, -0.0152, -0.0546, 0.0365, 0.0152, -0.0546, -0.0365, 0.0152, -0.0546, -0.0365, -0.0152, -0.0546, 0.0365, -0.0152, -0.0546, -0.0365, -0.0152, 0.0546, 0.0365, -0.0152, -0.0546, 0.0365, -0.0152, -0.0546, -0.0365, -0.0152, 0.0546, -0.0365, -0.0152, 0.0546, 0.0365, -0.0152, 0.0546, -0.0365, -0.0152, 0.0546, 0.0365, 0.0152, 0.0546, 0.0365, -0.0152, 0.0546, -0.0365, -0.0152, 0.0546, -0.0365, 0.0152, 0.0546, 0.0365, 0.0152, 0.0546, -0.0365, 0.0152, -0.0546, 0.0365, 0.0152, 0.0546, 0.0365, 0.0152, 0.0546, -0.0365, 0.0152, -0.0546, -0.0365, 0.0152, -0.0546, 0.0365, 0.0152, -0.0546, -0.0365, -0.0152, 0.0546, -0.0365, 0.0152, 0.0546, -0.0365, -0.0152, -0.0546, -0.0365, -0.0152, -0.0546, -0.0365, 0.0152, 0.0546, -0.0365, 0.0152, 0.0546, 0.0365, -0.0152, -0.0546, 0.0365, 0.0152, -0.0546, 0.0365, -0.0152, 0.0546, 0.0365, -0.0152, 0.0546, 0.0365, 0.0152, -0.0546, 0.0365, 0.0152 )
+
+[sub_resource type="ConcavePolygonShape" id=2]
+data = PoolVector3Array( -0.0546, -0.0365, 0.0152, -0.0546, 0.0365, -0.0152, -0.0546, 0.0365, 0.0152, -0.0546, -0.0365, 0.0152, -0.0546, -0.0365, -0.0152, -0.0546, 0.0365, -0.0152, -0.0546, -0.0365, -0.0152, 0.0546, 0.0365, -0.0152, -0.0546, 0.0365, -0.0152, -0.0546, -0.0365, -0.0152, 0.0546, -0.0365, -0.0152, 0.0546, 0.0365, -0.0152, 0.0546, -0.0365, -0.0152, 0.0546, 0.0365, 0.0152, 0.0546, 0.0365, -0.0152, 0.0546, -0.0365, -0.0152, 0.0546, -0.0365, 0.0152, 0.0546, 0.0365, 0.0152, 0.0546, -0.0365, 0.0152, -0.0546, 0.0365, 0.0152, 0.0546, 0.0365, 0.0152, 0.0546, -0.0365, 0.0152, -0.0546, -0.0365, 0.0152, -0.0546, 0.0365, 0.0152, -0.0546, -0.0365, -0.0152, 0.0546, -0.0365, 0.0152, 0.0546, -0.0365, -0.0152, -0.0546, -0.0365, -0.0152, -0.0546, -0.0365, 0.0152, 0.0546, -0.0365, 0.0152, 0.0546, 0.0365, -0.0152, -0.0546, 0.0365, 0.0152, -0.0546, 0.0365, -0.0152, 0.0546, 0.0365, -0.0152, 0.0546, 0.0365, 0.0152, -0.0546, 0.0365, 0.0152 )
+
+[node name="TV" instance=ExtResource( 1 )]
+script = ExtResource( 3 )
+TV = NodePath("TV")
+
+[node name="PowerButton" parent="TV/PowerButton" index="0"]
+collision_layer = 3
+script = ExtResource( 2 )
+powerBtn = NodePath("..")
+
+[node name="RotationBtn" parent="TV/RotationBtn" index="0"]
+collision_layer = 3
+script = ExtResource( 5 )
+btn = NodePath("..")
+
+[node name="Set1Button" parent="TV/Set1Button" index="0"]
+collision_layer = 3
+script = ExtResource( 4 )
+btn = NodePath("..")
+
+[node name="Set2Button" type="StaticBody" parent="TV/Set2Button" index="0"]
+collision_layer = 3
+script = ExtResource( 4 )
+btn = NodePath("..")
+
+[node name="CollisionShape" type="CollisionShape" parent="TV/Set2Button/Set2Button" index="0"]
+shape = SubResource( 1 )
+
+[node name="Set3Button" type="StaticBody" parent="TV/Set3Button" index="0"]
+collision_layer = 3
+script = ExtResource( 4 )
+btn = NodePath("..")
+
+[node name="CollisionShape" type="CollisionShape" parent="TV/Set3Button/Set3Button" index="0"]
+shape = SubResource( 2 )
+[connection signal="send_power" from="TV/PowerButton/PowerButton" to="." method="_on_PowerButton_send_power"]
+[connection signal="send_button_rotation" from="TV/RotationBtn/RotationBtn" to="." method="_on_RotationBtn_send_button_rotation"]
+[connection signal="send_button_set" from="TV/Set1Button/Set1Button" to="." method="_on_Set1Button_send_button_set"]
+[connection signal="send_button_set" from="TV/Set2Button/Set2Button" to="." method="_on_Set2Button_send_button_set"]
+[connection signal="send_button_set" from="TV/Set3Button/Set3Button" to="." method="_on_Set3Button_send_button_set"]

@@ -1,0 +1,92 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://World/House/Scene/House.tscn" type="PackedScene" id=2]
+[ext_resource path="res://UI/UI.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Interactable/InteractableLight.gd" type="Script" id=4]
+[ext_resource path="res://Models/Scenes/TV.tscn" type="PackedScene" id=5]
+[ext_resource path="res://default_env.tres" type="Environment" id=6]
+
+[sub_resource type="CubeMesh" id=1]
+
+[sub_resource type="BoxShape" id=2]
+
+[node name="World" type="Node"]
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="ViewportContainer2" type="ViewportContainer" parent="CanvasLayer2"]
+margin_right = 1024.0
+margin_bottom = 600.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UI" parent="CanvasLayer2/ViewportContainer2" instance=ExtResource( 3 )]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ViewportContainer" type="ViewportContainer" parent="CanvasLayer"]
+anchor_right = 4.0
+anchor_bottom = 4.0
+margin_top = -1.5874
+margin_right = -3072.0
+margin_bottom = -1801.59
+stretch = true
+stretch_shrink = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="CanvasLayer/ViewportContainer"]
+size = Vector2( 341, 199 )
+handle_input_locally = false
+render_target_update_mode = 3
+shadow_atlas_size = 1
+
+[node name="Player" parent="CanvasLayer/ViewportContainer/Viewport" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0102437, 1.62264, -0.00568962 )
+
+[node name="TV" parent="CanvasLayer/ViewportContainer/Viewport" instance=ExtResource( 5 )]
+
+[node name="MeshInstance" type="MeshInstance" parent="CanvasLayer/ViewportContainer/Viewport"]
+transform = Transform( 24.5118, 0, 0, 0, 0.999863, -0.372187, 0, 0.016545, 22.4924, 0, -2.21187, 0 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="CanvasLayer/ViewportContainer/Viewport/MeshInstance"]
+
+[node name="CollisionShape" type="CollisionShape" parent="CanvasLayer/ViewportContainer/Viewport/MeshInstance/StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00293875, 0, 0.00161482 )
+shape = SubResource( 2 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="CanvasLayer/ViewportContainer/Viewport"]
+transform = Transform( 0.233835, 0, 0, 0, -0.00857902, 0.221221, 0, -0.0891306, 0.0117961, 0.412787, 2.71303, -3.93646 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="CanvasLayer/ViewportContainer/Viewport/MeshInstance2"]
+collision_layer = 3
+script = ExtResource( 4 )
+light = NodePath("../../SpotLight")
+
+[node name="CollisionShape" type="CollisionShape" parent="CanvasLayer/ViewportContainer/Viewport/MeshInstance2/StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00293887, 0, 0.00161457 )
+shape = SubResource( 2 )
+
+[node name="House" parent="CanvasLayer/ViewportContainer/Viewport" instance=ExtResource( 2 )]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="CanvasLayer/ViewportContainer/Viewport"]
+environment = ExtResource( 6 )
+
+[node name="SpotLight" type="SpotLight" parent="CanvasLayer/ViewportContainer/Viewport"]
+transform = Transform( 0.293039, -0.0526211, -0.954651, 0, -0.998484, 0.0550372, -0.9561, -0.0161281, -0.292595, -5.07147, 1.06573, 2.31308 )
+light_energy = 3.41
+spot_angle = 39.6822
+
+[node name="DirectionalLight" type="DirectionalLight" parent="CanvasLayer/ViewportContainer/Viewport"]
+transform = Transform( -0.845445, -0.365015, 0.389854, -0.219954, 0.903177, 0.368635, -0.486664, 0.225911, -0.843873, 0, 2.84676, 0 )
+light_color = Color( 1, 0.92549, 0.792157, 1 )
+light_energy = 0.88
+shadow_enabled = true

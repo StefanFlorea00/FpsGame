@@ -1,0 +1,18 @@
+[gd_resource type="Environment" load_steps=2 format=2]
+
+[sub_resource type="ProceduralSky" id=1]
+sky_energy = 0.25
+
+[resource]
+background_mode = 2
+background_sky = SubResource( 1 )
+background_energy = 0.66
+ambient_light_energy = 0.84
+auto_exposure_scale = 0.1
+auto_exposure_max_luma = 8.24
+ssao_enabled = true
+ssao_intensity2 = 0.0
+ssao_quality = 0
+dof_blur_far_enabled = true
+dof_blur_far_distance = 44.65
+adjustment_saturation = 1.33
